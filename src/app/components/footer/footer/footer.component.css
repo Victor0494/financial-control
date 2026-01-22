@@ -1,0 +1,29 @@
+.container-footer {
+    display: flex;
+    justify-content: space-around;
+    height: auto;
+    width: auto;
+    padding: 0.5rem 0;
+}
+
+.material-icons {
+    color: rgb(98, 103, 107);
+    font-size: 3rem
+}
+
+.container-footer div {
+    display: flex;
+    flex-direction: column;
+}
+
+.description {
+    font-size: 1rem;
+    color: rgb(98, 103, 107);
+    text-align: center;
+}
+
+.add {
+    background: linear-gradient(135deg, #7c9ba5 0%, #b8e2ca 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

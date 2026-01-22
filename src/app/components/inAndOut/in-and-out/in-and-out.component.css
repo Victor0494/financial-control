@@ -1,0 +1,29 @@
+.container {
+    border-radius: 0.8rem;
+    padding: 0.6rem 1.3rem;
+    width: 7rem;
+
+}
+
+.first-part {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.first-part span {
+    font-size: medium;
+}
+
+.entrada {
+    background: #57c78600;
+    background: rgba(255, 255, 255, 0.377);
+    text-align: left;
+    font-size: x-large;
+}
+
+.saida {
+    background: #020024;
+    background: rgba(255, 255, 255, 0.253);
+    text-align: left;
+    font-size: x-large;
+}

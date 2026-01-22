@@ -1,0 +1,19 @@
+.container-bills {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.container-bills li {
+    list-style-type: none;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 1rem;
+
+}
+
+.container-bills li:last-child {
+    border-bottom: none;
+}

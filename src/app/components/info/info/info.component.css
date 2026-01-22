@@ -1,0 +1,42 @@
+.container-info {
+    width: auto;
+    height: 12rem;
+    padding: 0.2rem 1rem;
+    display: flex;
+    color: aliceblue;
+    flex-direction: column;
+    border-radius: 0.8rem;
+    background: #2A7B9B;
+    background: linear-gradient(135deg, hsl(152 60% 45%) 0%, hsl(200 80% 55%) 100%);
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    font-family: "Roboto Condensed", sans-serif;
+    font-weight: 500;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.first-part {
+    display: flex;
+    flex-direction: column;
+}
+
+.first-part span:first-of-type {
+    font-size: large;
+}
+
+.first-part span:last-of-type {
+    font-weight: 700;
+}
+
+
+.container-info span:last-of-type {
+    margin: 0;
+    font-size: xx-large;
+}
+
+.container-inAndOut {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}

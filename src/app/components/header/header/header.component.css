@@ -1,0 +1,19 @@
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 2rem;
+}
+
+.container-header p {
+    font-weight: 500;
+    font-family: "Roboto Condensed", sans-serif;
+    color: rgb(98, 103, 107);
+}
+
+.container-header span {
+    font-size: 2.5rem;
+    color: rgb(98, 103, 107);
+    padding: 0.5rem 0;
+}
+
+

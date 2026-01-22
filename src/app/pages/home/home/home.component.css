@@ -1,0 +1,31 @@
+.container-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: aliceblue;
+
+}
+
+.container-body {
+    flex: 1;
+    padding: 2rem;
+}
+
+.container-footer {
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px 20px;
+    border-radius: 0.5rem 0.5rem 0 0;
+    height: auto;
+    width: auto;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0; /* top, right, bottom, left = 0 */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

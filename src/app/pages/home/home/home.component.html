@@ -1,0 +1,34 @@
+<div class="container-page">
+  <div class="container-header">
+    <app-header></app-header>
+  </div>
+
+  <div class="container-body">
+    <app-info></app-info>
+
+    @if (showBill()) {
+    <div class="overlay" (click)="closeModal()">
+      <div class="modal" (click)="onChildClick($event)">
+        <app-add-bill></app-add-bill>
+      </div>
+    </div>
+    }
+
+    @if (showAddMoney()) {
+      <div class="overlay" (click)="closeModalAddMoney()">
+      <div class="modal" (click)="onChildAddMoney($event)">
+        <app-add-money></app-add-money>
+      </div>
+    </div>
+    }
+
+    <div class="bills">
+      <span>Contas</span>
+      <app-history></app-history>
+    </div>
+  </div>
+
+  <div class="container-footer">
+    <app-footer></app-footer>
+  </div>
+</div>

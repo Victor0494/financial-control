@@ -1,0 +1,63 @@
+.form-container {
+    height: 25rem;
+    width: 20rem;
+    padding: 1rem;
+    border-radius: 0.7rem;
+    color: black;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+.form-container div {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container div input {
+    border-radius: 1rem;
+    height: 2.5rem;
+    padding-left: 2.0rem;
+}
+
+.first-part span {
+    position: absolute;
+    top: 33%;
+    right: 81%;
+    color: #777;
+    font-size: x-large;
+}
+
+.second-part span {
+    position: absolute;
+    top: 45%;
+    right: 81%;
+    color: #777;
+    font-size: x-large;
+}
+
+.third-part span {
+    position: absolute;
+    top: 57%;
+    right: 81%;
+    color: #777;
+    font-size: x-large;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.form-container button {
+    padding: 0.6rem;
+    border-radius: 0.7rem;
+    border: none;
+    background: linear-gradient(135deg, hsl(152 60% 45%) 0%, hsl(200 80% 55%) 100%);
+    color: aliceblue;
+    font-weight: 600;
+    font-size: large;
+    font-family: "Roboto Condensed", sans-serif;
+}

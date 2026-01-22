@@ -1,0 +1,7 @@
+<ul class="container-bills">
+    @for (bill_item of bills(); track bill_item.id) {
+    <li>
+        <app-bill [bill]="bill_item"></app-bill>
+    </li>
+    }
+</ul>

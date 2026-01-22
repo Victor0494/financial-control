@@ -1,0 +1,9 @@
+<div class="bill-details" (click)="payedBill(bill!)" [class.payed]="payed">
+    <span>{{bill?.description}}</span>
+    <div class="info-bill">
+        <span>{{ bill?.value  | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+        <span>{{ bill?.dueDate}}</span>
+        <!-- <input type="checkbox" name="" id=""> -->
+    </div>
+   
+</div>

@@ -1,0 +1,32 @@
+<form class="form-container" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="first-part">
+        <label for="description">Descrição</label>
+        <span class="material-icons">request_quote</span>
+
+        <input type="text" name="description" id="description" formControlName="description" placeholder="Ex: Conta de luz">
+    </div>
+    <!-- @if (form.controls.description.touched && form.controls.description.invalid) {
+        <div>Descrição é obrigatório</div>
+    } -->
+
+    <div class="second-part">
+        <label for="value">Valor</label>
+        <span class="material-icons">attach_money</span>
+        <input type="text" name="value" id="value" formControlName="value" placeholder="0,00">
+
+    </div>
+    <!-- @if (form.controls.value.touched && form.controls.value.invalid) {
+        <div>Valor é obrigatório</div>
+    } -->
+
+    <div class="third-part">
+        <label for="dueDate">Data de pagamento</label>
+        <span class="material-icons">calendar_month</span>
+        <input type="date" name="dueDate" id="dueDate" formControlName="dueDate">
+
+    </div>
+    <!-- @if (form.controls.dueDate.touched && form.controls.dueDate.invalid) {
+        <div>Data de pagamento é obrigatório</div>
+    } -->
+    <button type="submit">Cadastrar</button>
+</form>
