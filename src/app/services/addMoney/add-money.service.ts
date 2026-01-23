@@ -10,9 +10,11 @@ export class AddMoneyService {
   private listner = signal(false);
 
   money = signal<number>(0);
+  subStractMoneyValue = signal<number>(0);
 
   showAddMoneyModal = this.listner.asReadonly();
   moneyUpdated = this.money.asReadonly();
+  subStractMoney = this.subStractMoneyValue.asReadonly();
 
   show() {
     this.listner.set(true);
@@ -22,12 +24,22 @@ export class AddMoneyService {
     this.listner.set(false);
   }
 
-  addMoney(moneyValue: number) {
+  addMoney(moneyValue: string) {
     const value = Number(moneyValue);
     this.money.update(v => v + value);
   }
 
+  subtractMoney(moneyValue: number) {
+    const value = Number(moneyValue);
+    this.money.update(v => v - value);
+    this.subStractMoneyValue.update(v => v + value);
+  }
+
   getMoneyValue() {
     return this.moneyUpdated;
+  }
+
+  getSubtractMoney() {
+    return this.subStractMoney;
   }
 }

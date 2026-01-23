@@ -11,11 +11,12 @@ import { AddMoneyService } from '../../../services/addMoney/add-money.service';
 export class InfoComponent {
 
   readonly moneyValue;
+  readonly subStractMoney;
 
 
   constructor(private addMoneyService: AddMoneyService) {
       this.moneyValue = this.addMoneyService.getMoneyValue();
-
+      this.subStractMoney = this.addMoneyService.getSubtractMoney();
   }
 
   addMoney(){

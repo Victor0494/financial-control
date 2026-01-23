@@ -15,11 +15,10 @@ export class AddMoneyComponent {
   }
 
   form = new FormGroup({
-    money: new FormControl<number>(0, {
-      nonNullable: true,
-      validators: Validators.required,
-    })
-  });
+  money: new FormControl('', {
+    validators: Validators.required
+  })
+    });
 
 
   submit() {

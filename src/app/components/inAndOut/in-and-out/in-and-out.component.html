@@ -3,5 +3,5 @@
        <span class="material-icons">{{icon}}</span>
        <span>{{type}}</span>
     </div>
-    <span>R$ {{value}}</span>
+    <span> {{value | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</span>
 </div>

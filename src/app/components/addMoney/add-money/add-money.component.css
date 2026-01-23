@@ -25,6 +25,14 @@
     background-color: #77777734;
 }
 
+.form-container div input::placeholder {
+      transition: opacity 0.2s ease;
+}
+
+.form-container div input:focus::placeholder {
+    opacity: 0;
+}
+
 .second-part span {
     position: absolute;
     top: 46%;
