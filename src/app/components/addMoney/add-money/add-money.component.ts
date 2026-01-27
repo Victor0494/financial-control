@@ -23,6 +23,7 @@ export class AddMoneyComponent {
 
   submit() {
     this.addMoneyService.addMoney(this.form.value.money!);
+    this.addMoneyService.updateMoneyInput(this.form.value.money!);
 
     this.form.reset();
     this.addMoneyService.close();

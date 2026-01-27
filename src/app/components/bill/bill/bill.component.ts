@@ -11,19 +11,12 @@ import { AddMoneyService } from '../../../services/addMoney/add-money.service';
 })
 export class BillComponent {
   
-  @Input() bill: BillDTO | undefined;
-  payed: boolean | undefined;
+  @Input() bill!: BillDTO;
 
   constructor(private addMoneyService: AddMoneyService) {}
 
   payedBill(billDTO: BillDTO) {
-    if(billDTO.payed) {
-      billDTO.payed = false;
-    } else {
-      billDTO.payed = true;
-      this.addMoneyService.subtractMoney(billDTO.value);
-    }
-    this.payed = billDTO.payed;
-
+    billDTO.payed = !billDTO.payed;
+    this.addMoneyService.updateMoneyValue(billDTO);
   }
 }

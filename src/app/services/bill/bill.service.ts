@@ -11,7 +11,7 @@ export class BillService {
   showBill = this.listner.asReadonly();
 
    private bills = signal<BillDTO[]>([
-    { id: '1', description: 'primeira conta', value: 10, dueDate: '01/02/26', payed: true },
+    { id: '1', description: 'primeira conta', value: 10, dueDate: '01/02/26', payed: false },
     { id: '2', description: 'segunda conta', value: 20, dueDate: '01/02/26', payed: false },
     { id: '3', description: 'terceira conta', value: 30, dueDate: '01/02/26', payed: false },
   ]);
