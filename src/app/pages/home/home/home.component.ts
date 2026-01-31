@@ -7,10 +7,11 @@ import { AddBillComponent } from "../../../components/addBill/add-bill/add-bill.
 import { BillService } from '../../../services/bill/bill.service';
 import { AddMoneyService } from '../../../services/addMoney/add-money.service';
 import { AddMoneyComponent } from "../../../components/addMoney/add-money/add-money.component";
+import { TransactionListComponent } from "../../../components/transactionList/transaction-list/transaction-list.component";
 
 @Component({
   selector: 'app-home',
-  imports: [HeaderComponent, InfoComponent, HistoryComponent, FooterComponent, AddBillComponent, AddMoneyComponent],
+  imports: [HeaderComponent, InfoComponent, HistoryComponent, FooterComponent, AddBillComponent, AddMoneyComponent, TransactionListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

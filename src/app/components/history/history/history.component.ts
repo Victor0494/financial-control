@@ -1,7 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import { BillComponent } from "../../bill/bill/bill.component";
-import { BillDTO } from '../../bill/bill/bilDTO';
 import { BillService } from '../../../services/bill/bill.service';
+import { HistoryService } from '../../../services/history/history.service';
 
 @Component({
   selector: 'app-history',
@@ -11,8 +11,26 @@ import { BillService } from '../../../services/bill/bill.service';
 })
 export class HistoryComponent {
 
+  showPeriod!: Signal<boolean>;
+
+  constructor(private historyService: HistoryService) {
+    this.showPeriod = this.historyService.showPeriodModal;
+  }
+
   private billService = inject(BillService);
 
   readonly bills = this.billService.getBills();
+
+  // showPeriodHistory() {
+  //   this.historyService.show();
+  // }
+
+  // closeModalHistory(): void {
+  //   this.historyService.close();
+  // }
+
+  // onChildHistory(event: Event): void {
+  //   event.stopPropagation();
+  // }
 
 }

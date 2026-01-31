@@ -15,7 +15,7 @@
     }
 
     @if (showAddMoney()) {
-      <div class="overlay" (click)="closeModalAddMoney()">
+    <div class="overlay" (click)="closeModalAddMoney()">
       <div class="modal" (click)="onChildAddMoney($event)">
         <app-add-money></app-add-money>
       </div>
@@ -24,7 +24,7 @@
 
     <div class="bills">
       <span>Contas</span>
-      <app-history></app-history>
+      <app-transaction-list></app-transaction-list>
     </div>
   </div>
 

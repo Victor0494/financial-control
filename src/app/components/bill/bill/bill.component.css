@@ -1,9 +1,7 @@
 .bill-details {
     display: flex;
     justify-content: space-between;
-    border-radius: 1rem;
-    padding: 0.1rem 0.3rem;
-    background-color: rgba(224, 224, 224, 0.466);
+    padding: 0.1rem 0.5rem;
     color: rgba(0, 0, 0, 0.678);
 }
 
@@ -11,17 +9,15 @@
     align-content: center;
 }
 
+.info-bill span:last-of-type {
+}
+
 .info-bill {
     display: flex;
     flex-direction: column;
 }
 
-.info-bill {
-    display: flex;
-    /* flex-direction: row; */
-}
 
 .payed {
-    border: 0.2rem solid rgba(16, 201, 41, 0.486);
-    color: rgba(3, 117, 18, 0.678);
+    color: rgba(5, 167, 26, 0.678);
 }
