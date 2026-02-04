@@ -1,7 +1,7 @@
 <div class="container-transaction">
     <div class="month-transaction">
         <span class="material-icons" (click)="backMonth()">arrow_back_ios_new</span>
-        <span>{{months[currentMonthIndex]}}</span>
+        <span>{{months[currentMonthIndex()]}}</span>
         <span class="material-icons" (click)="forwardMonth()">arrow_forward_ios</span>
     </div>
     <div class="history-bills">

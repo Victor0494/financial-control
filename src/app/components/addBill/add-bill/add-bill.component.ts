@@ -25,8 +25,7 @@ export class AddBillComponent {
       nonNullable: true,
       validators: Validators.required,
     }),
-    value: new FormControl<number>(0, {
-      nonNullable: true,
+    value: new FormControl('', {
       validators: Validators.required,
     }),
     dueDate: new FormControl<string>('', {
@@ -44,7 +43,7 @@ export class AddBillComponent {
     const billDTO: BillDTO = {
       id: crypto.randomUUID(),
       description: this.form.value.description!,
-      value: this.form.value.value!,
+      value: Number.parseFloat(this.form.value.value!),
       dueDate: this.form.value.dueDate!,
       payed: false,
     };

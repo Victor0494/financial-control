@@ -19,18 +19,6 @@ export class HistoryComponent {
 
   private billService = inject(BillService);
 
-  readonly bills = this.billService.getBills();
-
-  // showPeriodHistory() {
-  //   this.historyService.show();
-  // }
-
-  // closeModalHistory(): void {
-  //   this.historyService.close();
-  // }
-
-  // onChildHistory(event: Event): void {
-  //   event.stopPropagation();
-  // }
+  readonly bills = this.billService.filteredBills;
 
 }
