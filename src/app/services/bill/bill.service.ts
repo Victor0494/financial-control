@@ -1,12 +1,16 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, Injectable, Signal, signal } from '@angular/core';
 import { BillDTO } from '../../components/bill/bill/bilDTO';
+import { MonthlyBalanceDTO } from '../../components/addMoney/add-money/monthlyBalanceDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BillService {
   private listner = signal(false);
-  selectedMonth = signal<number>(0);
+  selectedMonth = signal<number>(new Date().getMonth());
+  selectedYear = signal<number>(new Date().getFullYear());
+
+  private monthlyBalances = signal<MonthlyBalanceDTO[]>([]);
 
   showBill = this.listner.asReadonly();
 
@@ -44,11 +48,30 @@ export class BillService {
   billsUpdated = this.bills.asReadonly();
 
   filteredBills = computed(() => {
-    return this.bills().filter(bill => {
-    const date = this.parseLocalDate(bill.dueDate);
-      return date.getMonth() === this.selectedMonth();
+    return this.bills().filter((bill) => {
+      const [y, m] = bill.dueDate.split('-').map(Number);
+      return y === this.selectedYear() && m - 1 === this.selectedMonth();
     });
-  })
+  });
+
+  expensesOfMonth = computed(() => {
+    return this.filteredBills()
+      .filter((b) => b.payed)
+      .reduce((total, b) => total + b.value, 0);
+  });
+
+  balanceOfMonth = computed(() => {
+    const initial = this.currentMonthInitialBalance();
+    return initial - this.expensesOfMonth();
+  });
+
+  currentMonthInitialBalance = computed(() => {
+    const found = this.monthlyBalances().find(
+      (m) => m.year === this.selectedYear() && m.month === this.selectedMonth(),
+    );
+
+    return found?.initialBalance ?? 0;
+  });
 
   getBills() {
     return this.billsUpdated;
@@ -66,17 +89,43 @@ export class BillService {
     this.listner.set(false);
   }
 
+  updateMonthlyBalance(moneyValue: number) {
+    const monthBalance: MonthlyBalanceDTO = {
+      year: 2026,
+      month: new Date().getMonth(),
+      initialBalance: moneyValue,
+    };
+
+    this.monthlyBalances.update((list) => {
+      const index = list.findIndex(
+        (m) => m.year === monthBalance.year && m.month === monthBalance.month,
+      );
+
+      if (index !== -1) {
+        const updated = [...list];
+
+        updated[index] = {
+          ...updated[index],
+          initialBalance:
+            updated[index].initialBalance + monthBalance.initialBalance,
+        };
+        return updated;
+      }
+
+    return [...list, monthBalance];
+    });
+  }
+
   nextMonth() {
-    this.selectedMonth.update(m => (m + 1) % 12);
+    this.selectedMonth.update((m) => (m + 1) % 12);
   }
 
   prevMonth() {
-    this.selectedMonth.update(m => (m - 1 + 12) % 12);
+    this.selectedMonth.update((m) => (m - 1 + 12) % 12);
   }
 
   parseLocalDate(dateStr: string): Date {
     const [year, month, day] = dateStr.split('-').map(Number);
     return new Date(year, month - 1, day);
   }
-
 }

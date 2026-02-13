@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AddMoneyService } from '../../../services/addMoney/add-money.service';
+import { BillService } from '../../../services/bill/bill.service';
 
 @Component({
   selector: 'app-add-money',
@@ -10,7 +11,10 @@ import { AddMoneyService } from '../../../services/addMoney/add-money.service';
 })
 export class AddMoneyComponent {
 
-  constructor(private addMoneyService: AddMoneyService) {
+    money = signal<number>(0);
+    moneyUpdated = this.money.asReadonly();
+
+  constructor(private addMoneyService: AddMoneyService, private billService: BillService) {
 
   }
 
@@ -22,8 +26,8 @@ export class AddMoneyComponent {
 
 
   submit() {
-    this.addMoneyService.addMoney(this.form.value.money!);
     this.addMoneyService.updateMoneyInput(this.form.value.money!);
+    this.billService.updateMonthlyBalance(Number.parseFloat(this.form.value.money!))
 
     this.form.reset();
     this.addMoneyService.close();

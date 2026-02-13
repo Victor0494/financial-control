@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { InAndOutComponent } from "../../inAndOut/in-and-out/in-and-out.component";
 import { AddMoneyService } from '../../../services/addMoney/add-money.service';
 import { CurrencyPipe } from '@angular/common';
+import { BillService } from '../../../services/bill/bill.service';
 
 @Component({
   selector: 'app-info',
@@ -16,8 +17,8 @@ export class InfoComponent {
   readonly money;
 
 
-  constructor(private addMoneyService: AddMoneyService) {
-      this.moneyValue = this.addMoneyService.getMoneyValue();
+  constructor(private addMoneyService: AddMoneyService, private billService: BillService) {
+      this.moneyValue = this.billService.currentMonthInitialBalance;
       this.subStractMoney = this.addMoneyService.getSubtractMoney();
       this.money = this.addMoneyService.getMoneyInput()
   }

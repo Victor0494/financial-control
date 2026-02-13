@@ -1,12 +1,13 @@
 import { Injectable, signal } from '@angular/core';
 import { BillDTO } from '../../components/bill/bill/bilDTO';
+import { BillService } from '../bill/bill.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddMoneyService {
 
-  constructor() { }
+  constructor(private billService: BillService) { }
 
   private listner = signal(false);
 
@@ -38,8 +39,7 @@ export class AddMoneyService {
   }
 
   addMoney(moneyValue: string) {
-    const value = Number(moneyValue);
-    this.money.update(v => v + value); 
+    this.billService.updateMonthlyBalance(this.moneyUpdated())
   }
 
   updateMoneyInput(moneyValue: string) {
