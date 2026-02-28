@@ -15,10 +15,14 @@ export class InfoComponent {
   readonly moneyValue;
   readonly subStractMoney;
   readonly money;
+  readonly currentInsertedValue;
+  readonly currentOutputValue;
 
 
   constructor(private addMoneyService: AddMoneyService, private billService: BillService) {
       this.moneyValue = this.billService.currentMonthInitialBalance;
+      this.currentInsertedValue = this.billService.currentInputMoneyValue;
+      this.currentOutputValue = this.billService.currentOutPutMoneyValue;
       this.subStractMoney = this.addMoneyService.getSubtractMoney();
       this.money = this.addMoneyService.getMoneyInput()
   }

@@ -1,5 +1,7 @@
 export interface MonthlyBalanceDTO {
     year: number;
     month: number;
-    initialBalance: number;
+    balance: number;
+    moneyInput?: number;
+    moneyOutPut?: number;
 }

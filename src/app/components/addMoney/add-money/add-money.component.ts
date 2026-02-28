@@ -26,8 +26,8 @@ export class AddMoneyComponent {
 
 
   submit() {
-    this.addMoneyService.updateMoneyInput(this.form.value.money!);
-    this.billService.updateMonthlyBalance(Number.parseFloat(this.form.value.money!))
+    // this.addMoneyService.updateMoneyInput(this.form.value.money!);
+    this.billService.updateMonthlyBalance(Number.parseFloat(this.form.value.money!), false);
 
     this.form.reset();
     this.addMoneyService.close();

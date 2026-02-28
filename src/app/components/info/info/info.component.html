@@ -4,7 +4,7 @@
         <span>{{moneyValue() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</span>
     </div>
     <div class="container-inAndOut">
-        <app-in-and-out value={{money()}} icon="south_east" type="Entradas" typeClass="entrada" (click)="addMoney()"></app-in-and-out>
-        <app-in-and-out value={{subStractMoney()}} icon="arrow_outward" type="Saídas" typeClass="saida"></app-in-and-out>
+        <app-in-and-out value={{currentInsertedValue()}} icon="south_east" type="Entradas" typeClass="entrada" (click)="addMoney()"></app-in-and-out>
+        <app-in-and-out value={{currentOutputValue()}} icon="arrow_outward" type="Saídas" typeClass="saida"></app-in-and-out>
     </div>
 </div>

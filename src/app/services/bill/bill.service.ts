@@ -70,7 +70,23 @@ export class BillService {
       (m) => m.year === this.selectedYear() && m.month === this.selectedMonth(),
     );
 
-    return found?.initialBalance ?? 0;
+    return found?.balance ?? 0;
+  });
+
+  currentInputMoneyValue = computed(() => {
+    const found = this.monthlyBalances().find(
+      (m) => m.year === this.selectedYear() && m.month === this.selectedMonth(),
+    );
+
+    return found?.moneyInput ?? 0;
+  });
+
+  currentOutPutMoneyValue = computed(() => {
+    const found = this.monthlyBalances().find(
+      (m) => m.year === this.selectedYear() && m.month === this.selectedMonth(),
+    );
+
+    return found?.moneyOutPut ?? 0;
   });
 
   getBills() {
@@ -89,11 +105,13 @@ export class BillService {
     this.listner.set(false);
   }
 
-  updateMonthlyBalance(moneyValue: number) {
+  updateMonthlyBalance(moneyValue: number, payed?: boolean) {
     const monthBalance: MonthlyBalanceDTO = {
       year: 2026,
       month: new Date().getMonth(),
-      initialBalance: moneyValue,
+      balance: moneyValue,
+      moneyInput: payed ? undefined : moneyValue,
+      moneyOutPut: payed ? moneyValue : undefined
     };
 
     this.monthlyBalances.update((list) => {
@@ -106,13 +124,18 @@ export class BillService {
 
         updated[index] = {
           ...updated[index],
-          initialBalance:
-            updated[index].initialBalance + monthBalance.initialBalance,
+          balance: payed
+            ? updated[index].balance - monthBalance.balance
+            : updated[index].balance + monthBalance.balance,
+          moneyInput:
+            (updated[index].moneyInput ?? 0) + (monthBalance.moneyInput ?? 0),
+          moneyOutPut:
+            (updated[index].moneyOutPut ?? 0) - (moneyValue),
         };
         return updated;
       }
 
-    return [...list, monthBalance];
+      return [...list, monthBalance];
     });
   }
 
@@ -122,10 +145,5 @@ export class BillService {
 
   prevMonth() {
     this.selectedMonth.update((m) => (m - 1 + 12) % 12);
-  }
-
-  parseLocalDate(dateStr: string): Date {
-    const [year, month, day] = dateStr.split('-').map(Number);
-    return new Date(year, month - 1, day);
   }
 }

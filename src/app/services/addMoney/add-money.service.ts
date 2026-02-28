@@ -30,12 +30,7 @@ export class AddMoneyService {
   }
 
   updateMoneyValue(bilDTO: BillDTO) {
-    if(bilDTO.payed) {
-      this.subtractMoney(bilDTO.value);
-    } else {
-      this.addMoney(bilDTO.value.toString());
-       this.subStractMoneyValue.update(v => v - bilDTO.value);
-    }
+    this.billService.updateMonthlyBalance(bilDTO.value, bilDTO.payed);
   }
 
   addMoney(moneyValue: string) {
