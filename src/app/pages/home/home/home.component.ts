@@ -11,7 +11,7 @@ import { TransactionListComponent } from "../../../components/transactionList/tr
 
 @Component({
   selector: 'app-home',
-  imports: [HeaderComponent, InfoComponent, HistoryComponent, FooterComponent, AddBillComponent, AddMoneyComponent, TransactionListComponent],
+  imports: [HeaderComponent, InfoComponent, FooterComponent, AddBillComponent, AddMoneyComponent, TransactionListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
