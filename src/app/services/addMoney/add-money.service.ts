@@ -30,7 +30,7 @@ export class AddMoneyService {
   }
 
   updateMoneyValue(bilDTO: BillDTO) {
-    this.billService.updateMonthlyBalance(bilDTO.value, bilDTO.payed);
+    this.billService.updateMonthlyBalance(bilDTO.billValue, bilDTO.payed);
   }
 
   addMoney(moneyValue: string) {

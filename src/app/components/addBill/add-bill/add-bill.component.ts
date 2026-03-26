@@ -41,14 +41,16 @@ export class AddBillComponent {
     }
 
     const billDTO: BillDTO = {
-      id: crypto.randomUUID(),
       description: this.form.value.description!,
-      value: Number.parseFloat(this.form.value.value!),
+      billValue: Number.parseFloat(this.form.value.value!),
       dueDate: this.form.value.dueDate!,
       payed: false,
     };
 
-    this.billService.addBill(billDTO);
+    this.billService.addBill(billDTO).subscribe({
+      next: () => console.log("Sucesso"),
+      error: (err) => console.log(err)
+    });
 
     this.form.reset();
 
@@ -56,6 +58,6 @@ export class AddBillComponent {
   }
 
   closeModal() {
-    this.billService.close();
+    this.billService.setShowBill(false);
   }
 }

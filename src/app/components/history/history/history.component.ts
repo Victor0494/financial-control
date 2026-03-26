@@ -1,4 +1,4 @@
-import { Component, inject, Signal } from '@angular/core';
+import { Component, inject, OnInit, Signal } from '@angular/core';
 import { BillComponent } from "../../bill/bill/bill.component";
 import { BillService } from '../../../services/bill/bill.service';
 import { HistoryService } from '../../../services/history/history.service';
@@ -9,15 +9,18 @@ import { HistoryService } from '../../../services/history/history.service';
   templateUrl: './history.component.html',
   styleUrl: './history.component.css'
 })
-export class HistoryComponent {
+export class HistoryComponent implements OnInit {
 
   showPeriod!: Signal<boolean>;
+
+  private billService = inject(BillService);
 
   constructor(private historyService: HistoryService) {
     this.showPeriod = this.historyService.showPeriodModal;
   }
-
-  private billService = inject(BillService);
+  ngOnInit(): void {
+    this.billService.loadBill();
+  }
 
   readonly bills = this.billService.filteredBills;
 

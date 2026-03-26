@@ -1,7 +1,7 @@
 <div class="bill-details" (click)="payedBill(bill!)" [class.payed]="bill?.payed">
     <span>{{bill?.description}}</span>
     <div class="info-bill">
-        <span>{{ bill?.value  | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+        <span>{{ bill?.billValue| currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
         <span>{{ bill?.dueDate}}</span>
     </div>
    

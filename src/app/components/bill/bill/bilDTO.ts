@@ -1,7 +1,7 @@
 export interface BillDTO {
-    id: string;
+    id?: string;
     description: string;
-    value: number;
+    billValue: number;
     dueDate: string;
     payed: boolean;
 }

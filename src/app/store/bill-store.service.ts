@@ -35,7 +35,7 @@ export class BillStoreService {
   expensesOfMonth = computed(() =>
     this.filteredBills()
       .filter((b) => b.payed)
-      .reduce((total, b) => total + b.value, 0),
+      .reduce((total, b) => total + b.billValue, 0),
   );
 
 

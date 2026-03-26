@@ -1,54 +1,27 @@
-import { computed, Injectable, Signal, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { BillDTO } from '../../components/bill/bill/bilDTO';
 import { MonthlyBalanceDTO } from '../../components/addMoney/add-money/monthlyBalanceDTO';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { BillApiService } from './bill-api.service';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BillService {
-  private listner = signal(false);
+
+  private listener = signal(false);
   selectedMonth = signal<number>(new Date().getMonth());
   selectedYear = signal<number>(new Date().getFullYear());
 
-  constructor(private http: HttpClient) {
+  constructor(private billApi: BillApiService) {
 
   }
 
   private monthlyBalances = signal<MonthlyBalanceDTO[]>([]);
 
-  showBill = this.listner.asReadonly();
+  showBill = this.listener.asReadonly();
 
-  private bills = signal<BillDTO[]>([
-    {
-      id: '1',
-      description: 'primeira conta',
-      value: 10,
-      dueDate: '2026-01-01',
-      payed: false,
-    },
-    {
-      id: '2',
-      description: 'primeira conta',
-      value: 10,
-      dueDate: '2026-02-01',
-      payed: false,
-    },
-    {
-      id: '3',
-      description: 'segunda conta',
-      value: 20,
-      dueDate: '2026-03-01',
-      payed: false,
-    },
-    {
-      id: '4',
-      description: 'terceira conta',
-      value: 30,
-      dueDate: '2026-04-01',
-      payed: false,
-    },
-  ]);
+  private bills = signal<BillDTO[]>([]);
 
   billsUpdated = this.bills.asReadonly();
 
@@ -62,7 +35,7 @@ export class BillService {
   expensesOfMonth = computed(() => {
     return this.filteredBills()
       .filter((b) => b.payed)
-      .reduce((total, b) => total + b.value, 0);
+      .reduce((total, b) => total + b.billValue, 0);
   });
 
   balanceOfMonth = computed(() => {
@@ -94,20 +67,16 @@ export class BillService {
     return found?.moneyOutPut ?? 0;
   });
 
-  getBills() {
-    return this.billsUpdated;
-  }
-
   addBill(bill: BillDTO) {
-    this.bills.update((bills) => [...bills, bill]);
+    return this.billApi.addBill(bill).pipe(
+    tap((newBill) => {
+      this.bills.update((list) => [...list, newBill]);
+    })
+  );
   }
 
-  show() {
-    this.listner.set(true);
-  }
-
-  close() {
-    this.listner.set(false);
+  setShowBill(value: boolean) {
+    this.listener.set(value);
   }
 
   updateMonthlyBalance(moneyValue: number, payed?: boolean) {
@@ -146,73 +115,25 @@ export class BillService {
 
   nextMonth() {
     this.selectedMonth.update((m) => (m + 1) % 12);
+    let date = new Date(this.selectedYear(), this.selectedMonth());
+    this.loadBill(date.toISOString().split('T')[0]);
   }
 
   prevMonth() {
     this.selectedMonth.update((m) => (m - 1 + 12) % 12);
+    let date = new Date(this.selectedYear(), this.selectedMonth());
+
+    this.loadBill(date.toISOString().split('T')[0]);
   }
 
-   loadBill() {
-    let params = new HttpParams()
-    .set('dueDate', '2026-03-14');
+  loadBill(date?: string) {
+    const finalDate = date ?? new Date().toISOString().split('T')[0];
 
-    this.http.get<BillDTO[]>("http://localhost:8080/v1/bill", {params: params})
+
+    this.billApi.getBillsByDate(finalDate)
     .subscribe((bills) => {
       this.bills.set(bills);
     })
   }
  
-  // constructor(private store: BillStore) {}
-
-  // addBill(bill: BillDTO) {
-  //   this.store.addBill(bill);
-  // }
-
-  // addMoney(value: number) {
-  //   this.updateBalance(value, false);
-  // }
-
-  // payBill(value: number) {
-  //   this.updateBalance(value, true);
-  // }
-
-  // private updateBalance(value: number, payed: boolean) {
-
-  //   const year = this.store.selectedYear();
-  //   const month = this.store.selectedMonth();
-
-  //   this.store.updateMonthlyBalances((list) => {
-
-  //     const index = list.findIndex(
-  //       (m) => m.year === year && m.month === month,
-  //     );
-
-  //     if (index === -1) {
-  //       return [
-  //         ...list,
-  //         {
-  //           year,
-  //           month,
-  //           balance: payed ? -value : value,
-  //           moneyInput: payed ? 0 : value,
-  //           moneyOutPut: payed ? value : 0,
-  //         },
-  //       ];
-  //     }
-
-  //     const updated = [...list];
-  //     const current = updated[index];
-
-  //     updated[index] = {
-  //       ...current,
-  //       balance: payed
-  //         ? current.balance - value
-  //         : current.balance + value,
-  //       moneyInput: (current.moneyInput ?? 0) + (payed ? 0 : value),
-  //       moneyOutPut: (current.moneyOutPut ?? 0) + (payed ? value : 0),
-  //     };
-
-  //     return updated;
-  //   });
-  // }
 }

@@ -26,7 +26,7 @@ export class HomeComponent {
   }
 
   closeModal(): void {
-    this.billService.close();
+    this.billService.setShowBill(false);
   }
 
   onChildClick(event: Event): void {
