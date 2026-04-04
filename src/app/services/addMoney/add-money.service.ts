@@ -15,7 +15,6 @@ export class AddMoneyService {
   subStractMoneyValue = signal<number>(0);
   moneyInput = signal<number>(0);
 
-
   showAddMoneyModal = this.listner.asReadonly();
   moneyUpdated = this.money.asReadonly();
   subStractMoney = this.subStractMoneyValue.asReadonly();
@@ -30,11 +29,7 @@ export class AddMoneyService {
   }
 
   updateMoneyValue(bilDTO: BillDTO) {
-    this.billService.updateMonthlyBalance(bilDTO.billValue, bilDTO.payed);
-  }
-
-  addMoney(moneyValue: string) {
-    this.billService.updateMonthlyBalance(this.moneyUpdated())
+    this.billService.addExpense(bilDTO.billValue);
   }
 
   updateMoneyInput(moneyValue: string) {

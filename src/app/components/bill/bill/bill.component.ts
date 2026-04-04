@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { BillDTO } from './bilDTO';
 import { CurrencyPipe } from '@angular/common';
 import { AddMoneyService } from '../../../services/addMoney/add-money.service';
+import { BillService } from '../../../services/bill/bill.service';
 
 @Component({
   selector: 'app-bill',
@@ -13,10 +14,17 @@ export class BillComponent {
   
   @Input() bill!: BillDTO;
 
-  constructor(private addMoneyService: AddMoneyService) {}
+  constructor(private billService: BillService) {}
 
-  payedBill(billDTO: BillDTO) {
-    billDTO.payed = !billDTO.payed;
-    this.addMoneyService.updateMoneyValue(billDTO);
+  payedBill(bill: BillDTO) {
+  const wasPayed = bill.payed;
+
+  bill.payed = !bill.payed;
+
+  if (!wasPayed && bill.payed) {
+    this.billService.addExpense(bill.billValue);
+  } else if (wasPayed && !bill.payed) {
+    this.billService.addIncome(bill.billValue);
   }
+}
 }

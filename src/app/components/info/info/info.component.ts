@@ -24,7 +24,7 @@ export class InfoComponent {
       this.currentInsertedValue = this.billService.currentInputMoneyValue;
       this.currentOutputValue = this.billService.currentOutPutMoneyValue;
       this.subStractMoney = this.addMoneyService.getSubtractMoney();
-      this.money = this.addMoneyService.getMoneyInput()
+      this.money = this.addMoneyService.getMoneyInput();
   }
 
   addMoney(){
