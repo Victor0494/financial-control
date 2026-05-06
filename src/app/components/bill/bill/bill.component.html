@@ -2,7 +2,7 @@
     <span>{{bill?.description}}</span>
     <div class="info-bill">
         <span>{{ bill?.billValue| currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
-        <span>{{ bill?.dueDate}}</span>
+        <span>{{ bill?.dueDate | date:'dd/MM/yyyy' }}</span>
     </div>
    
 </div>
