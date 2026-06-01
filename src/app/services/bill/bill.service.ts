@@ -3,6 +3,7 @@ import { BillDTO } from '../../components/bill/bill/bilDTO';
 import { MonthlyBalanceDTO } from '../../components/addMoney/add-money/monthlyBalanceDTO';
 import { BillApiService } from './bill-api.service';
 import { tap } from 'rxjs';
+import { BalanceService } from '../balance/balance.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class BillService {
   showBill = this.listener.asReadonly();
   billsUpdated = this.bills.asReadonly();
 
-  constructor(private billApi: BillApiService) {
+  constructor(private billApi: BillApiService, private balanceService: BalanceService) {
     effect(() => {
       const year = this.selectedYear();
       const month = this.selectedMonth();
@@ -24,7 +25,6 @@ export class BillService {
       const date = new Date(year, month).toISOString().split('T')[0];
 
       this.billApi.getBillsByDate(date).subscribe((bills) => {
-        console.log('Fetched bills for', bills);
         this.bills.set(bills);
       });
     });
@@ -84,75 +84,11 @@ export class BillService {
     this.listener.set(value);
   }
 
-  updateMonthlyBalance(moneyValue: number, payed?: boolean) {
-    const monthBalance: MonthlyBalanceDTO = {
-      year: 2026,
-      month: new Date().getMonth(),
-      balance: moneyValue,
-      moneyInput: payed ? undefined : moneyValue,
-      moneyOutPut: payed ? moneyValue : undefined,
-    };
-
-    this.monthlyBalances.update((list) => {
-      const index = list.findIndex(
-        (m) => m.year === monthBalance.year && m.month === monthBalance.month,
-      );
-
-      if (index !== -1) {
-        const updated = [...list];
-
-        updated[index] = {
-          ...updated[index],
-          balance: payed
-            ? updated[index].balance - monthBalance.balance
-            : updated[index].balance + monthBalance.balance,
-          moneyInput:
-            (updated[index].moneyInput ?? 0) + (monthBalance.moneyInput ?? 0),
-          moneyOutPut: (updated[index].moneyOutPut ?? 0) - moneyValue,
-        };
-        return updated;
-      }
-      return [...list, monthBalance];
-    });
-  }
-
   private applyTransaction(value: number, type: 'INCOME' | 'EXPENSE') {
-    const now = new Date();
-
-    this.monthlyBalances.update((list) => {
-      const index = list.findIndex(
-        (m) => m.year === now.getFullYear() && m.month === now.getMonth(),
-      );
-
-      const delta = type === 'INCOME' ? value : -value;
-
-      if (index !== -1) {
-        const updated = [...list];
-
-        updated[index] = {
-          ...updated[index],
-          balance: updated[index].balance + delta,
-          moneyInput:
-            (updated[index].moneyInput ?? 0) + (type === 'INCOME' ? value : 0),
-          moneyOutPut:
-            (updated[index].moneyOutPut ?? 0) +
-            (type === 'EXPENSE' ? value : 0),
-        };
-
-        return updated;
-      }
-
-      return [
-        ...list,
-        {
-          year: now.getFullYear(),
-          month: now.getMonth(),
-          balance: delta,
-          moneyInput: type === 'INCOME' ? value : 0,
-          moneyOutPut: type === 'EXPENSE' ? value : 0,
-        },
-      ];
+    this.balanceService.updateMonthlyBalance(value, type).subscribe(() => {
+      console.log('Balance updated successfully');
     });
+    
   }
 
   addIncome(value: number) {

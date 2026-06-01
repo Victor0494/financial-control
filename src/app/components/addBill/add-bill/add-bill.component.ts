@@ -34,6 +34,7 @@ export class AddBillComponent {
     }),
   });
 
+  // TODO Validar o por que não esta atualizando a lista de contas ao adicionar uma nova conta
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();

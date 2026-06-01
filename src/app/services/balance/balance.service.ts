@@ -1,13 +1,16 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { MonthlyBalanceDTO } from '../../components/addMoney/add-money/monthlyBalanceDTO';
 import { BillDTO } from '../../components/bill/bill/bilDTO';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BalanceService {
 
-  constructor() { }
+  private readonly API_URL = "http://localhost:8080/v1/balance";
+
+  constructor(private http: HttpClient) { }
 
   private monthlyBalances = signal<MonthlyBalanceDTO[]>([]);
 
@@ -15,41 +18,13 @@ export class BalanceService {
     return this.monthlyBalances.asReadonly();
   }
 
-   updateMonthlyBalance(year: number, month: number, amount: number, payed: boolean) {
-    this.monthlyBalances.update((list) => {
-      const index = list.findIndex(
-        (m) => m.year === year && m.month === month
-      );
+   updateMonthlyBalance(value: number, type: 'INCOME' | 'EXPENSE') {
+    const params = {
+      value: value,
+      type
+    }
 
-      // Se já existe registro do mês
-      if (index !== -1) {
-        const updated = [...list];
-        const current = updated[index];
-
-        updated[index] = {
-          ...current,
-          balance: payed
-            ? current.balance - amount
-            : current.balance + amount,
-          moneyInput: (current.moneyInput ?? 0) + (payed ? 0 : amount),
-          moneyOutPut: (current.moneyOutPut ?? 0) + (payed ? amount : 0),
-        };
-
-        return updated;
-      }
-
-      // Se NÃO existe registro do mês
-      return [
-        ...list,
-        {
-          year,
-          month,
-          balance: payed ? -amount : amount,
-          moneyInput: payed ? 0 : amount,
-          moneyOutPut: payed ? amount : 0,
-        },
-      ];
-    });
+    return this.http.post<void>(this.API_URL, null, { params });
   }
 
   getInitialBalance(year: number, month: number): number {
