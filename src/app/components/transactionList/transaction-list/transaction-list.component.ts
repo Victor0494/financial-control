@@ -9,7 +9,6 @@ import { BillService } from '../../../services/bill/bill.service';
   styleUrl: './transaction-list.component.css',
 })
 export class TransactionListComponent {
-
   currentMonthIndex!: Signal<number>;
 
   readonly months: string[] = [
@@ -32,13 +31,13 @@ export class TransactionListComponent {
   }
 
   backMonth() {
-    if (this.currentMonthIndex() > 0) {
+    if (this.currentMonthIndex() > 1) {
       this.billService.prevMonth();
     }
   }
 
   forwardMonth() {
-    if (this.currentMonthIndex() < this.months.length - 1) {
+    if (this.currentMonthIndex() < 12) {
       this.billService.nextMonth();
     }
   }

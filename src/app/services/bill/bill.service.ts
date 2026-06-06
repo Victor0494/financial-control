@@ -10,19 +10,22 @@ import { BalanceService } from '../balance/balance.service';
 })
 export class BillService {
   private listener = signal(false);
-  selectedMonth = signal<number>(new Date().getMonth());
+  selectedMonth = signal<number>(new Date().getMonth() + 1);
   selectedYear = signal<number>(new Date().getFullYear());
   private bills = signal<BillDTO[]>([]);
 
   showBill = this.listener.asReadonly();
   billsUpdated = this.bills.asReadonly();
 
-  constructor(private billApi: BillApiService, private balanceService: BalanceService) {
+  constructor(
+    private billApi: BillApiService,
+    private balanceService: BalanceService,
+  ) {
     effect(() => {
       const year = this.selectedYear();
       const month = this.selectedMonth();
 
-      const date = new Date(year, month).toISOString().split('T')[0];
+      const date = new Date(year, month - 1).toISOString().split('T')[0];
 
       this.billApi.getBillsByDate(date).subscribe((bills) => {
         this.bills.set(bills);
@@ -35,9 +38,8 @@ export class BillService {
   //TODO descobrir por que retornando null
   filteredBills = computed(() => {
     return this.bills().filter((bill) => {
-      console.log('Filtering bill:', bill);
       const [y, m] = bill.dueDate.split('-').map(Number);
-      return y === this.selectedYear() && m - 1 === this.selectedMonth();
+      return y === this.selectedYear() && m === this.selectedMonth();
     });
   });
 
@@ -85,28 +87,44 @@ export class BillService {
   }
 
   private applyTransaction(value: number, type: 'INCOME' | 'EXPENSE') {
-    this.balanceService.updateMonthlyBalance(value, type).subscribe(() => {
-      console.log('Balance updated successfully');
-    });
-    
+    this.balanceService
+      .updateMonthlyBalance(value, type)
+      .subscribe((updatedBalance) => {
+        this.monthlyBalances.update((list) => {
+          const exist = list.find(
+            (m) =>
+              m.year === updatedBalance.year &&
+              m.month === updatedBalance.month,
+          );
+
+          if (!exist) {
+            return [...list, updatedBalance];
+          }
+
+          return list.map((item) =>
+            item.year === updatedBalance.year &&
+            item.month === updatedBalance.month
+              ? updatedBalance
+              : item,
+          );
+        });
+      });
   }
 
   addIncome(value: number) {
-    console.log('Adding income:', value);
     this.applyTransaction(value, 'INCOME');
   }
 
   addExpense(value: number) {
-    console.log('Adding expense:', value);
     this.applyTransaction(value, 'EXPENSE');
   }
 
   nextMonth() {
-    this.selectedMonth.update((m) => (m + 1) % 12);
+    this.selectedMonth.update((m) => (m === 12 ? 1 : m + 1));
   }
 
   prevMonth() {
-    this.selectedMonth.update((m) => (m - 1 + 12) % 12);
+    this.selectedMonth.update((m) => (m === 1 ? 12 : m - 1));
   }
 
   loadBill(date?: string) {
@@ -115,5 +133,27 @@ export class BillService {
     this.billApi.getBillsByDate(finalDate).subscribe((bills) => {
       this.bills.set(bills);
     });
+  }
+
+  loadCurrentMonthBalance() {
+    this.balanceService
+      .getBalanceForMonth(this.selectedYear(), this.selectedMonth())
+      .subscribe((balance) => {
+        this.monthlyBalances.update((list) => {
+          const index = list.findIndex(
+            (item) =>
+              item.year === balance.year && item.month === balance.month,
+          );
+
+          if (index === -1) {
+            return [...list, balance];
+          }
+
+          const updated = [...list];
+          updated[index] = balance;
+
+          return updated;
+        });
+      });
   }
 }

@@ -17,6 +17,7 @@ export class BillComponent {
 
   constructor(private billService: BillService) {}
 
+  // Validar por que ao clicar na conta, não está atualizando no banco para false
   payedBill(bill: BillDTO) {
   const wasPayed = bill.payed;
 
