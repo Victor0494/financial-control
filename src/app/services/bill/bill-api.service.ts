@@ -19,4 +19,12 @@ export class BillApiService {
   addBill(bill: BillDTO) {
     return this.http.post<BillDTO>(this.API_URL, bill);
   }
+
+  updateBillStatus(bill: BillDTO) {
+    const params = {
+      payed: bill.payed
+    }
+console.log('Updating bill status:', bill.id, 'to', bill.payed);
+    return this.http.patch<void>(`${this.API_URL}/${bill.id}`, null, { params });
+  }
 }

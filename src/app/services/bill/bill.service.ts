@@ -43,13 +43,7 @@ export class BillService {
     });
   });
 
-  expensesOfMonth = computed(() => {
-    return this.filteredBills()
-      .filter((b) => b.payed)
-      .reduce((total, b) => total + b.billValue, 0);
-  });
-
-  balanceOfMonth = computed(() => {
+   balanceOfMonth = computed(() => {
     const data = this.currentMonthData();
     if (!data) return 0;
 
@@ -119,6 +113,12 @@ export class BillService {
     this.applyTransaction(value, 'EXPENSE');
   }
 
+  updateBillStatus(bill: BillDTO) {
+    this.billApi.updateBillStatus(bill).subscribe(() => {
+      console.log('Bill status updated');
+    });
+  }
+  
   nextMonth() {
     this.selectedMonth.update((m) => (m === 12 ? 1 : m + 1));
   }
