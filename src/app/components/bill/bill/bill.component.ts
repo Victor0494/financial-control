@@ -24,10 +24,11 @@ export class BillComponent {
 
   if (!wasPayed && bill.payed) {
     this.billService.addExpense(bill.billValue);
-    this.billService.updateBillStatus(bill);
 
   } else if (wasPayed && !bill.payed) {
     this.billService.addIncome(bill.billValue);
   }
-}
+  this.billService.updateBillStatus(bill);
+
+} 
 }

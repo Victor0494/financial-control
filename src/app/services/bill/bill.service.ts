@@ -35,9 +35,9 @@ export class BillService {
 
   private monthlyBalances = signal<MonthlyBalanceDTO[]>([]);
 
-  //TODO descobrir por que retornando null
   filteredBills = computed(() => {
     return this.bills().filter((bill) => {
+      console.log(bill);
       const [y, m] = bill.dueDate.split('-').map(Number);
       return y === this.selectedYear() && m === this.selectedMonth();
     });
