@@ -37,7 +37,6 @@ export class BillService {
 
   filteredBills = computed(() => {
     return this.bills().filter((bill) => {
-      console.log(bill);
       const [y, m] = bill.dueDate.split('-').map(Number);
       return y === this.selectedYear() && m === this.selectedMonth();
     });
