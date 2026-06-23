@@ -114,7 +114,6 @@ export class BillService {
 
   updateBillStatus(bill: BillDTO) {
     this.billApi.updateBillStatus(bill).subscribe(() => {
-      console.log('Bill status updated');
     });
   }
   

@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { BillDTO } from "../../components/bill/bill/bilDTO";
 import { Injectable } from "@angular/core";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BillApiService {
-  private readonly API_URL = "http://localhost:8080/v1/bill";
+  private readonly API_URL = `${environment.apiUrl}/v1/bill`;
 
   constructor(private http: HttpClient) {}
 
@@ -24,7 +25,6 @@ export class BillApiService {
     const params = {
       payed: bill.payed
     }
-console.log('Updating bill status:', bill.id, 'to', bill.payed);
     return this.http.patch<void>(`${this.API_URL}/${bill.id}`, null, { params });
   }
 }

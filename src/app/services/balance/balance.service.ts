@@ -1,13 +1,14 @@
 import {Injectable, signal } from '@angular/core';
 import { MonthlyBalanceDTO } from '../../components/addMoney/add-money/monthlyBalanceDTO';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BalanceService {
 
-  private readonly API_URL = "http://localhost:8080/v1/balance";
+  private readonly API_URL = `${environment.apiUrl}/v1/balance`;
 
   constructor(private http: HttpClient) { }
 
