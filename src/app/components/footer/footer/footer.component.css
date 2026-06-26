@@ -1,9 +1,17 @@
 .container-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
     display: flex;
     justify-content: space-around;
-    height: auto;
-    width: auto;
-    padding: 0.5rem 0;
+    align-items: center;
+
+    padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom));
+
+    background: white;
+    box-shadow: 0 -2px 8px rgba(0,0,0,.1);
 }
 
 .material-icons {
