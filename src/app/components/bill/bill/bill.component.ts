@@ -18,17 +18,11 @@ export class BillComponent {
   constructor(private billService: BillService) {}
 
   payedBill(bill: BillDTO) {
-  const wasPayed = bill.payed;
+   bill.payed = !bill.payed;
 
-  bill.payed = !bill.payed;
-
-  if (!wasPayed && bill.payed) {
+  if (bill.payed) {
     this.billService.addExpense(bill.billValue);
-
-  } else if (wasPayed && !bill.payed) {
-    this.billService.addIncome(bill.billValue);
-  }
+  } 
   this.billService.updateBillStatus(bill);
-
 } 
 }

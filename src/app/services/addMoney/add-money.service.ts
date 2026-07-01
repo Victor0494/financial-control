@@ -28,10 +28,6 @@ export class AddMoneyService {
     this.listner.set(false);
   }
 
-  updateMoneyValue(bilDTO: BillDTO) {
-    this.billService.addExpense(bilDTO.billValue);
-  }
-
   updateMoneyInput(moneyValue: string) {
     const value = Number(moneyValue);
     this.moneyInput.set(value);

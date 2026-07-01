@@ -25,7 +25,6 @@ export class AddMoneyComponent {
     });
 
 
-  // TODO Implementar o saldo no backend para não perder o valor ao atualizar a página
   submit() {
     this.billService.addIncome(Number.parseFloat(this.form.value.money!));
 

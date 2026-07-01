@@ -114,6 +114,7 @@ export class BillService {
 
   updateBillStatus(bill: BillDTO) {
     this.billApi.updateBillStatus(bill).subscribe(() => {
+      this.loadCurrentMonthBalance()
     });
   }
   
