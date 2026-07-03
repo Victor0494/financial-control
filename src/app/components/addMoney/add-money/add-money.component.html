@@ -1,8 +1,10 @@
 <form class="form-container" [formGroup]="form" (ngSubmit)="submit()">
     <div class="second-part">
         <label for="value">Valor</label>
-        <span class="material-icons">attach_money</span>
-        <input type="text" name="value" id="value" formControlName="money" placeholder="0,00">
+        <div class="input-container">
+            <span class="material-icons">attach_money</span>
+            <input type="text" name="value" id="value" formControlName="money" placeholder="0,00">
+        </div>
     </div>
     <button type="submit">Adicionar Saldo</button>
 </form>
