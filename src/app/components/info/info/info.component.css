@@ -39,4 +39,12 @@
     display: flex;
     width: 100%;
     justify-content: space-evenly;
+    gap: 0.5rem;
+}
+
+.container-inAndOut app-in-and-out {
+    flex-basis: 7rem;
+    flex-shrink: 1;
+    flex-grow: 1;
+    min-width: 0;
 }
