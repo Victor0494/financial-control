@@ -1,8 +1,10 @@
 <div class="bill-details" (click)="payedBill(bill!)" [class.payed]="bill.payed">
-    <span>{{bill.description}}</span>
     <div class="info-bill">
-        <span>{{ bill.billValue| currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
-        <span>{{ bill.dueDate | date:'dd/MM/yyyy' }}</span>
+        <span>{{bill.description}}</span>
+        <span>Vence {{ bill.dueDate | date:'dd/MM/yyyy' }}</span>
     </div>
-   
+    <div class="details-info">
+        <span>{{ bill.billValue| currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+        <span class="material-icons">delete</span>
+    </div>
 </div>

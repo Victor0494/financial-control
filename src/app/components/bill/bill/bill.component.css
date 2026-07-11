@@ -1,7 +1,7 @@
 .bill-details {
     display: flex;
     justify-content: space-between;
-    padding: 0.1rem 0.5rem;
+    padding: 0.5rem 0.8rem;
     color: rgba(0, 0, 0, 0.678);
 }
 
@@ -9,15 +9,45 @@
     align-content: center;
 }
 
-.info-bill span:last-of-type {
-}
-
 .info-bill {
     display: flex;
     flex-direction: column;
 }
 
+.info-bill span:first-of-type {
+    font-size: 1rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.678);
+}
+
+.info-bill span:last-of-type {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.507);
+}
 
 .payed {
-    color: rgba(5, 167, 26, 0.678);
+    color: rgba(5, 167, 27, 0.521);
+}
+
+.details-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.details-info span:first-of-type {
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.795);
+}
+
+.details-info span:last-of-type {
+    color: rgba(0, 0, 0, 0.363);
+}
+
+.payed .info-bill span:first-of-type {
+    color: rgba(5, 167, 27, 0.521);
+}
+
+.payed .details-info span:first-of-type {
+    color: rgba(5, 167, 27, 0.521);
 }
